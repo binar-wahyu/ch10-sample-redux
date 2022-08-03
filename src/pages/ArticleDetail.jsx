@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { getAccessToken } from "../context/auth";
+import { getAccessToken } from "../store/slices/user";
 
 function ArticleDetail() {
   const params = useParams();

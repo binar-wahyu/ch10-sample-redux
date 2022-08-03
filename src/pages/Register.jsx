@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/auth";
+import { login } from "../store/slices/user";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const dispatch = useDispatch();
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -31,7 +32,7 @@ function Register() {
     if (response.ok) {
       const data = await response.json();
 
-      await login(data.accessToken);
+      await dispatch(login(data.accessToken));
 
       setLoading(false);
 

@@ -1,16 +1,24 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../context/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, userSelector } from "../store/slices/user";
 
 function Header() {
-  const { user, logout } = useAuth();
+  const { user, loading, error } = useSelector(userSelector);
+  const dispatch = useDispatch();
 
   function jsx_rightSection() {
-    if (user === null) {
+    if (loading) {
       return <Navbar.Text>Loading user...</Navbar.Text>;
     }
 
-    if (user === false) {
+    if (error) {
+      return (
+        <Navbar.Text>Something went wrong when loading user data</Navbar.Text>
+      );
+    }
+
+    if (!user) {
       return (
         <Nav>
           <Nav.Link as={NavLink} to="/login">
@@ -27,7 +35,7 @@ function Header() {
     return (
       <Nav>
         <Navbar.Text>{user.username}</Navbar.Text>
-        <Nav.Link onClick={() => logout()}>Logout</Nav.Link>
+        <Nav.Link onClick={() => dispatch(logout())}>Logout</Nav.Link>
       </Nav>
     );
   }
