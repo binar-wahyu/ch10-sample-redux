@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, userSelector } from "../store/slices/user";
 
 function Header() {
-  const { user, loading, error } = useSelector(userSelector);
+  const { user, error } = useSelector(userSelector);
   const dispatch = useDispatch();
 
   function jsx_rightSection() {
-    if (loading) {
+    if (user === null) {
       return <Navbar.Text>Loading user...</Navbar.Text>;
     }
 
@@ -18,7 +18,7 @@ function Header() {
       );
     }
 
-    if (!user) {
+    if (user === false) {
       return (
         <Nav>
           <Nav.Link as={NavLink} to="/login">

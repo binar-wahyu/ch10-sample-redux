@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { userSelector } from "../store/slices/user";
 
 function RequireAuth({ children }) {
-  const { user, loading, error } = useSelector(userSelector);
+  const { user, error } = useSelector(userSelector);
 
-  if (loading) {
+  if (user === null) {
     return <h3>Checking user...</h3>;
   }
 
@@ -13,7 +13,7 @@ function RequireAuth({ children }) {
     return <h3>Something went wrong when loading user data</h3>;
   }
 
-  if (!user) {
+  if (user === false) {
     return <Navigate to="/login" />;
   }
 

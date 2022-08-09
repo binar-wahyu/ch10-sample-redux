@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: null,
-  loading: false,
+  user: null, // null = loading, false = no user data, non-null/object = user data
   error: null,
 };
 
@@ -11,21 +10,19 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUserLoading: (state) => {
-      state.loading = true;
+      state.user = null;
     },
     setUserData: (state, action) => {
       state.user = action.payload;
       state.error = null;
-      state.loading = false;
     },
     setUserEmpty: (state) => {
-      state.user = null;
+      state.user = false;
       state.error = null;
-      state.loading = false;
     },
     setUserError: (state, action) => {
+      state.user = false;
       state.error = action.payload;
-      state.loading = false;
     },
   },
 });
